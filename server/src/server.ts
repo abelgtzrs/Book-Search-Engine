@@ -2,11 +2,9 @@ import express, { Application } from "express";
 import http from "node:http";
 import path from "node:path";
 import db from "./config/connection.js";
-
-// ⬇️ NEW imports
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { typeDefs, resolvers } from "./schemas/index.js";
+import { typeDefs, resolvers } from "./schemas";
 import { authMiddleware } from "./services/auth.js";
 
 const app: Application = express();

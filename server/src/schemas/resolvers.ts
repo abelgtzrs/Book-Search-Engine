@@ -1,6 +1,6 @@
 // server/src/schemas/resolvers.ts
-import { AuthenticationError } from "@apollo/server/errors";
-import { User } from "../models/User.js";
+import { AuthenticationError } from "apollo-server-errors";
+import User from "../models/User.js";
 import { signToken } from "../services/auth.js";
 
 export const resolvers = {
