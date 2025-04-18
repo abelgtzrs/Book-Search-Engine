@@ -4,11 +4,24 @@ import path from "node:path";
 import db from "./config/connection.js";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
-import { typeDefs, resolvers } from "./schemas";
+import { typeDefs, resolvers } from "./schemas/index.js";
 import { authMiddleware } from "./services/auth.js";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // or '*'
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204); // preflight response
+  }
+  return next();
+});
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -38,7 +51,11 @@ async function startApolloServer() {
       context: async ({ req }) => authMiddleware(req),
     })
   );
+  console.log("Attempting to connect to MongoDB...");
 
+  db.on("error", (err) => {
+    console.error("❌ MongoDB connection error:", err.message);
+  });
   // Open DB then start HTTP server
   db.once("open", () => {
     http

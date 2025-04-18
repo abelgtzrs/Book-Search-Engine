@@ -15,7 +15,7 @@ import Navbar from "./components/Navbar";
 
 // 1. HTTP Link to /graphql
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: "http://localhost:3001/graphql", // 👈 for local dev
 });
 
 // 2. Auth header using token from localStorage
