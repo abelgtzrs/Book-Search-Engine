@@ -15,7 +15,7 @@ import Navbar from "./components/Navbar";
 
 // HTTP Link to /graphql
 const httpLink = createHttpLink({
-  uri: "https://book-search-engine-5tn2.onrender.com/graphql",
+  uri: "import.meta.env.VITE_GRAPHQL_ENDPOINT",
 });
 
 // Auth header using token from localStorage
