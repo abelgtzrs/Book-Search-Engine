@@ -68,7 +68,7 @@ This is a full-stack MERN application that allows users to search for books usin
 
 ## Deployed Link
 
-[Click here to visit the deployed site on Render](#)
+[Click here to visit the deployed site on Netlify](https://chic-lily-014d82.netlify.app/)
 
 ## Screenshot
 
