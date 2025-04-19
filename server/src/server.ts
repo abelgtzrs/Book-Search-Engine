@@ -11,19 +11,25 @@ import { dirname } from "path";
 
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
-
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://chic-lily-014d82.netlify.app",
+];
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // or '*'
+  const origin = req.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   if (req.method === "OPTIONS") {
-    return res.sendStatus(204); // preflight response
+    return res.sendStatus(204);
   }
   return next();
 });
@@ -34,13 +40,6 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
-<<<<<<< Updated upstream
-=======
-
-  app.get("*", (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
-  });
->>>>>>> Stashed changes
 }
 
 // Apollo Server Setup
