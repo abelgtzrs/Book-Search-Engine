@@ -13,12 +13,12 @@ import { setContext } from "@apollo/client/link/context";
 
 import Navbar from "./components/Navbar";
 
-// 1. HTTP Link to /graphql
+// HTTP Link to /graphql
 const httpLink = createHttpLink({
-  uri: "http://localhost:3001/graphql", // 👈 for local dev
+  uri: "https://book-search-engine-5tn2.onrender.com/graphql",
 });
 
-// 2. Auth header using token from localStorage
+// Auth header using token from localStorage
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
   return {
@@ -29,13 +29,11 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// 3. Create Apollo Client
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
-// 4. Wrap your app
 function App() {
   return (
     <ApolloProvider client={client}>
