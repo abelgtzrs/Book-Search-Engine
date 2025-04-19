@@ -34,6 +34,13 @@ app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/dist")));
+<<<<<<< Updated upstream
+=======
+
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+  });
+>>>>>>> Stashed changes
 }
 
 // Apollo Server Setup
